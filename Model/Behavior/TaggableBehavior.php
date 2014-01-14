@@ -271,6 +271,7 @@ class TaggableBehavior extends ModelBehavior {
 		}
 
 		foreach ($tagIds as $tagId) {
+			if (!$tagId) continue;
 			$fieldName = Inflector::underscore($model->name) . '_occurrence';
 			$tagModel = $model->{$this->settings[$model->alias]['tagAlias']};
 			$taggedModel = $tagModel->{$this->settings[$model->alias]['taggedAlias']};
