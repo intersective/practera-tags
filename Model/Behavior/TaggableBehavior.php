@@ -142,7 +142,7 @@ class TaggableBehavior extends ModelBehavior {
 			$tagAlias = $this->settings[$model->alias]['tagAlias'];
 			$taggedAlias = $this->settings[$model->alias]['taggedAlias'];
 			$tagModel = $model->{$tagAlias};
-
+			//echo "Tag string: $string";
 			extract($this->disassembleTags($model, $string, $this->settings[$model->alias]['separator']));
 
 			if (!empty($tags)) {
@@ -179,6 +179,7 @@ class TaggableBehavior extends ModelBehavior {
 					$newTags = $tags;
 				}
 				foreach ($newTags as $key => $newTag) {
+					//echo "Saving new tag: $newTag";
 					$tagModel->create();
 					$tagModel->save($newTag);
 					$newTagIds[] = $tagModel->id;
@@ -342,6 +343,7 @@ class TaggableBehavior extends ModelBehavior {
 		} else if (!$hasTags && $this->settings[$model->alias]['deleteTagsOnEmptyField']) {
 			$this->deleteTagged($model);
 		}
+		//exit;
 	}
 
 /**
