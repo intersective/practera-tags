@@ -51,8 +51,8 @@ class TagCloudHelper extends AppHelper {
 			'extract' => '{n}.occurance',
 			'before' => '',
 			'after' => '',
-			'maxSize' => 160,
-			'minSize' => 80,
+			'maxSize' => 5,
+			'minSize' => 0,
 			'url' => array(
 				'controller' => 'search'
 			),
@@ -74,13 +74,28 @@ class TagCloudHelper extends AppHelper {
 			shuffle($tags);
 		}
 
-		$cloud = null;
+		$cloud = "<style>
+		.label-minier {
+			font-size: 8px;
+			line-height: 1.75;
+		}
+		.label-xs {
+			font-size: 10px;
+			line-height: 1.75;
+		}
+		.label {
+			margin-bottom: 5px;
+		}
+		.label-lg {
+			line-height: 1;
+		}
+		</style>";
 		foreach ($tags as $tag) {
 			$size = $options['minSize'] + (($tag['occurance'] - $minWeight) * (($options['maxSize'] - $options['minSize']) / ($spread)));
 			$size = $tag['size'] = ceil($size);
 
 			$cloud .= $this->_replace($options['before'], $size);
-			$cloud .= $this->Html->link($tag['name'], $this->_tagUrl($tag, $options), array('id' => 'tag-' . $tag['id'])) . ' ';
+			$cloud .= $this->Html->link($tag['name'], $this->_tagUrl($tag, $options), array('class' => 'label label' . $this->_size($size) . ' size-' . $size . ' arrowed-right', 'id' => 'tag-' . $tag['id'])) . ' ';
 			$cloud .= $this->_replace($options['after'], $size);
 		}
 
@@ -108,5 +123,19 @@ class TagCloudHelper extends AppHelper {
  */
 	protected function _replace($string, $size) {
 		return str_replace("%size%", $size, $string);
+	}
+
+ 	protected function _size($size) {
+ 		if ($size < 1) {
+ 		  	return "-minier";
+		} else if ($size < 2) {
+		  	return "-xs";
+		} else if ($size < 3) {
+		  	return "-sm";
+		} else if ($size < 4) {
+		  	return "-md";
+		} else {
+		  	return "-lg";
+		}
 	}
 }
