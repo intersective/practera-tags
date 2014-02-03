@@ -48,7 +48,7 @@ class TagCloudHelper extends AppHelper {
 		$defaults = array(
 			'tagModel' => 'Tag',
 			'shuffle' => true,
-			'extract' => '{n}.occurance',
+			'extract' => '{s}.occurance',
 			'before' => '',
 			'after' => '',
 			'maxSize' => 5,
@@ -95,7 +95,7 @@ class TagCloudHelper extends AppHelper {
 			$size = $tag['size'] = ceil($size);
 
 			$cloud .= $this->_replace($options['before'], $size);
-			$cloud .= $this->Html->link($tag['name'], $this->_tagUrl($tag, $options), array('class' => 'label label' . $this->_size($size) . ' size-' . $size . ' arrowed-right', 'id' => 'tag-' . $tag['id'])) . ' ';
+			$cloud .= $this->Html->link($tag['name'], $this->_tagUrl($tag, $options), array('class' => 'label label' . $this->_size($size, $spread) . ' size-' . $size . ' arrowed-right', 'id' => 'tag-' . $tag['id'])) . ' ';
 			$cloud .= $this->_replace($options['after'], $size);
 		}
 
@@ -125,7 +125,8 @@ class TagCloudHelper extends AppHelper {
 		return str_replace("%size%", $size, $string);
 	}
 
- 	protected function _size($size) {
+ 	protected function _size($size, $spread) {
+ 		if ($spread < 5) $size += 5 - $spread;
  		if ($size < 1) {
  		  	return "-minier";
 		} else if ($size < 2) {
