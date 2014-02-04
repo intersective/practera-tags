@@ -23,7 +23,7 @@ echo $this->Paginator->counter(array(
 	<th><?php echo $this->Paginator->sort('identifier');?></th>
 	<th><?php echo $this->Paginator->sort('name');?></th>
 	<th><?php echo $this->Paginator->sort('keyname');?></th>
-	<th><?php echo $this->Paginator->sort('weight');?></th>
+	<th><?php echo $this->Paginator->sort('occurance');?></th>
 	<th><?php echo $this->Paginator->sort('created');?></th>
 	<th><?php echo $this->Paginator->sort('modified');?></th>
 	<th class="actions"><?php echo __d('tags', 'Actions');?></th>
@@ -50,7 +50,7 @@ foreach ($tags as $tag):
 			<?php echo $tag['Tag']['keyname']; ?>
 		</td>
 		<td>
-			<?php echo $tag['Tag']['weight']; ?>
+			<?php echo $tag['Tag']['occurance']; ?>
 		</td>
 		<td>
 			<?php echo $tag['Tag']['created']; ?>
