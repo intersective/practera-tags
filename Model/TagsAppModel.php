@@ -16,6 +16,7 @@ App::uses('AppModel', 'Model');
  * @package tags
  */
 class TagsAppModel extends AppModel {
+	//public $tablePrefix = 'core_';
 
 /**
  * Behaviors
