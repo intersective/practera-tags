@@ -57,7 +57,8 @@
 			tag_input.after('<textarea id=\"'+tag_input.attr('id')+'\" name=\"'+tag_input.attr('name')+'\" rows=\"3\">'+tag_input.val()+'</textarea>').remove();
 		}
 
-		$('form').on('submit', function(e) {
+		$('form').on('submit fileuploadsubmit', function(e) {
+			//console.log('ehre');
 			var tags = $(field).val();
 			if (tags) {
 				var tagarr = tags.split(',');
@@ -82,8 +83,8 @@
 				}
 				tag_input.val(tagarr.join(',').replace(/(^\s*,)|(,\s*$)/g, ''));
 			}
-			console.log(tag_input.val());
-			return false;
+			//console.log(tag_input.val());
+			return true;
 		});
 
 	};
