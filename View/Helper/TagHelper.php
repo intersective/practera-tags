@@ -23,7 +23,7 @@ class TagHelper extends AppHelper {
 		$this->Html->script("bootstrap-tag.min", array('block' => 'script'));
 		$this->Html->script("Tags.taginput", array('block' => 'script'));
 
-		echo $this->Form->input($field, array('type' => 'text', 'label' => false, 'legend' => false, 'div' => false, 'data-provide'=>'tag', 'placeholder' => $options['tag_placeholder'], 'url' => $this->Html->url(array('action'=>'autocomplete_tags')) . ".json", 'namespace' => $namespace));
+		echo $this->Form->input($field, array('type' => 'text', 'label' => false, 'legend' => false, 'div' => false, 'data-provide'=>'tag', 'placeholder' => $options['tag_placeholder'], 'data-placeholder' => $options['tag_placeholder'], 'url' => $this->Html->url(array('action'=>'autocomplete_tags')) . ".json", 'namespace' => $namespace));
 
 		$far = explode('.',$field);
 		$tagid = "#";
