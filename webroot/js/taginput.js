@@ -58,12 +58,25 @@ var handleTags = function (field) {
 						if (e[1]) { tag = e[1].trim(); id = e[0].trim(); } else { tag=e[0].trim(); id=identifier; }
 						// if we don't have this tag in the cache already, put it in
 						if (!tagcache[tag]) tagcache[tag] = id;
-						procme.push(tag);
+						procme.push({id: tag, text: tag});
 					}
+					console.log(procme);
 					return { results: procme };
 				}
 			};
-
+			tagopts.initSelection = function (element, callback) {
+		        var procme = element.val().split(",");
+		        var data = [];
+		        for (var i in procme) {
+					e = procme[i].trim().split(':');
+					// if we have just one result, it's tag only so append the provided identifier
+					if (e[1]) { tag = e[1].trim(); id = e[0].trim(); } else { tag=e[0].trim(); id=identifier; }
+					// if we don't have this tag in the cache already, put it in
+					if (!tagcache[tag]) tagcache[tag] = id;
+					data.push({id: tag, text: tag});
+				}
+		        callback(data);
+			};
 		}
 		tag_input.select2(tagopts);
 	} else {
@@ -76,17 +89,19 @@ var handleTags = function (field) {
 		if (tags) {
 			var tagarr = tags.split(',');
 			for (var t in tagarr) {
-				if (tagcache[t]) {
-					tagarr[t] = tagcache[t] + ':' + t;
+				var val = tagarr[t];
+				if (val.indexOf(':') >= 0) continue;
+				if (tagcache[val]) {
+					tagarr[t] = tagcache[val] + ':' + val;
 				} else {
 					// didn't find, so create localized tag
-					tagarr[t] = identifier + ':' + t;
-					tagcache[t] = identifier;
+					tagarr[t] = identifier + ':' + val;
+					tagcache[val] = identifier;
 				}
 			}
-			tag_input.val(tagarr.join(',').replace(/(^\s*,)|(,\s*$)/g, ''));
+
+			$(field).val(tagarr.join(',').replace(/(^\s*,)|(,\s*$)/g, ''));
 		}
-		console.log(tag_input.val());
 		return true;
 	});
 };
