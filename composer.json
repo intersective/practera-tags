@@ -1,0 +1,13 @@
+{
+    "name": "intersective/tags",
+    "description": "Tags plugin for Practera core, extended from cakedc/tags.",
+    "type": "cakephp-plugin",
+    "homepage": "http://www.practera.com",
+    "license": "MIT",
+    "support": {
+        "email": "support@intersective.com"
+    },
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}
