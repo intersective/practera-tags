@@ -64,6 +64,9 @@ var handleTags = function (field) {
 					return { results: procme };
 				}
 			};
+			tagopts.createSearchChoice = function (term) {
+				return {id: term, text: term};
+			};
 			tagopts.initSelection = function (element, callback) {
 		        var procme = element.val().split(",");
 		        var data = [];
@@ -77,6 +80,7 @@ var handleTags = function (field) {
 				}
 		        callback(data);
 			};
+
 		}
 		tag_input.select2(tagopts);
 	} else {
