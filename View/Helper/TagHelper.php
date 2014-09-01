@@ -40,8 +40,11 @@ class TagHelper extends AppHelper {
 			'identifier' => $identifier,
 			'maxselect' => $options['tag_maxselect']
 		];
-		if ($options['tag_autocomplete']) {
+		if (!empty($options['tag_autocomplete'])) {
 			$formopts['url'] = $this->Html->url(array('action'=>'autocomplete_tags')) . ".json";
+			if ($options['tag_autocomplete'] !== true) {
+				$formopts['url'] = $options['tag_autocomplete'] . ".json";
+			}
 		}
 		if ($options['tag_width']) $formopts['style'] = "width: {$options['tag_width']}";
 
