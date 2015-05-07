@@ -56,6 +56,12 @@ class TagHelper extends AppHelper {
 			$tagid .= ucfirst($f);
 		}
 		$this->Js->buffer("handleTags('$tagid');");
+		
+		if (!Configure::check('Tag.tag_name_length')) {
+			Configure::write('Tag.tag_name_length', 30);
+		}
+		
+		echo $this->Html->scriptBlock('var maxTagCharLength = ' . Configure::read('Tag.tag_name_length') . ';', [ 'inline' => true ]);
 	}
 
 }

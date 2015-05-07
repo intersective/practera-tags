@@ -22,11 +22,16 @@ var handleTags = function (field) {
 	}
 	//we could just set the data-provide='tag' of the element inside HTML, but IE8 fails!
 	if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) ) {
+		if (typeof maxTagCharLength === 'undefined') {
+			maxTagCharLength = 30;
+		}
+
 		var tagopts = {
 			maximumSelectionSize: tag_input.attr('maxselect'),
 			placeholder: tag_input.attr('placeholder'),
 			tokenSeparators: [ ',', ':' ],
-			tags: tags
+			tags: tags,
+			maximumInputLength: maxTagCharLength
 		};
 
 		if (url) {
