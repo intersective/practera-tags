@@ -85,6 +85,29 @@ var handleTags = function (field) {
 				}
 		        callback(data);
 			};
+			tag_input.select2(tagopts).on('change', function(e) {
+				if (e && e.removed) {
+					val = $(field).val();
+	
+					//check if the tag has gone through changes in fileuploadsubmit
+					//e.g, team;273:folder1,team;273:folder2
+					if (val.indexOf(";") > -1 &&  val.indexOf(":") > -1) {
+						//break this into array
+						arr = val.split(',');
+	
+						//check if following term contains in array
+						$.each(arr, function(i, v) {
+							if (v.indexOf(e.removed.text) > -1) {
+								//delete if it has been deleted
+								delete arr[i];
+							}
+						});
+	
+						//join back the array.
+						$(field).val(arr.join(',').replace(/(^\s*,)|(,\s*$)/g, ''));
+					}
+				}
+			});
 
 		}
 		tag_input.select2(tagopts);
