@@ -146,10 +146,16 @@ class TaggableBehavior extends ModelBehavior {
 			extract($this->disassembleTags($model, $string, $this->settings[$model->alias]['separator']));
 
 			if (!empty($tags)) {
+				foreach ($tags as $tag) {
+					if (!$tag['identifier']) {
+						$cond['OR'][] = [ $tagAlias . '.keyname' => $tag['keyname'], $tagAlias . '.identifier IS NULL' ];
+					} else {
+						$cond['OR'][] = [ $tagAlias . '.keyname' => $tag['keyname'], $tagAlias . '.identifier' => $tag['identifier'] ];
+					}
+				}
 				$existingTags = $tagModel->find('all', array(
 					'contain' => array(),
-					'conditions' => array(
-						$tagAlias . '.keyname' => Set::extract($tags, '{n}.keyname')),
+					'conditions' => $cond,
 					'fields' => array(
 						$tagAlias . '.identifier',
 						$tagAlias . '.keyname',
